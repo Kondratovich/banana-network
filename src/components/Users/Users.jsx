@@ -1,74 +1,43 @@
-import s from "./Users.module.css";
-import userPhoto from "./../../assets/images/photo.jpg";
+import Paginator from "../Common/Paginator/Paginator";
+import User from "./User";
 
-let Users = (props) => {
-  let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+let Users = ({
+  currentPage,
+  totalItemsCount,
+  pageSize,
+  onPageChanged,
+  users,
+  followingInProgress,
+  unfollow,
+  follow,
+}) => {
+  let pagesCount = Math.ceil(totalItemsCount / pageSize);
   let pages = [];
   for (let i = 1; i <= pagesCount; i++) {
     pages.push(i);
   }
   return (
     <div>
+      <Paginator
+        currentPage={currentPage}
+        onPageChanged={onPageChanged}
+        totalItemsCount={totalItemsCount}
+        pageSize={pageSize}
+      />
       <div>
-        {pages.map((p) => {
+        {users.map((u) => {
           return (
-            <span
-              onClick={() => {
-                props.onPageChanged(p);
-              }}
-              className={props.currentPage === p && s.selectedPage}
-            >
-              {p}
-            </span>
+            <User
+              user={u}
+              key={u.id}
+              followingInProgress={followingInProgress}
+              unfollow={unfollow}
+              follow={follow}
+            />
           );
         })}
       </div>
-      {props.users.map((u) => {
-        return (
-          <div key={u.id}>
-            <span>
-              <div>
-                <img
-                  src={u.photos.small != null ? u.photos.small : userPhoto}
-                  class={s.userPhoto}
-                  alt="ava"
-                />
-              </div>
-              <div>
-                {u.followed ? (
-                  <button
-                    onClick={() => {
-                      props.unfollow(u.id);
-                    }}
-                  >
-                    Unfollow
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => {
-                      props.follow(u.id);
-                    }}
-                  >
-                    Follow
-                  </button>
-                )}
-              </div>
-            </span>
-            <span>
-              <span>
-                <div>{u.name}</div>
-                <div>{u.status}</div>
-              </span>
-              <span>
-                <div>{"u.location.country"}</div>
-                <div>{"u.location.city"}</div>
-              </span>
-            </span>
-          </div>
-        );
-      })}
     </div>
   );
 };
-
 export default Users;

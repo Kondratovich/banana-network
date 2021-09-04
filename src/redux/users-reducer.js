@@ -1,13 +1,26 @@
+import { updateObjectInArray } from "../utils/object-helpers";
+import { usersAPI } from "./../api/api";
+
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = "SET_USERS";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT";
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
+const TOGGLE_IS_FOLLOWING_IN_PROGRESS = "TOGGLE_IS_FOLLOWING_IN_PROGRESS";
 
-export const follow = (userId) => ({ type: FOLLOW, userId });
+let initialState = {
+  users: [],
+  pageSize: 10,
+  totalUsersCount: 0,
+  currentPage: 1,
+  isFetching: false,
+  followingInProgress: [],
+};
 
-export const unfollow = (userId) => ({ type: UNFOLLOW, userId });
+export const followSuccess = (userId) => ({ type: FOLLOW, userId });
+
+export const unfollowSuccess = (userId) => ({ type: UNFOLLOW, userId });
 
 export const setUsers = (users) => ({ type: SET_USERS, users });
 
@@ -23,48 +36,54 @@ export const setTotalUsersCount = (totalUsersCount) => ({
 
 export const toggleIsFetching = (isFetching) => ({
   type: TOGGLE_IS_FETCHING,
-  isFetching
+  isFetching,
 });
 
-let initialState = {
-  users: [
-    // {
-    //   id: 1,
-    //   photoUrl: "https://piper.old-games.ru/uploads/scans/2018/02/2018-02-23-20-15-20-1910.jpg",
-    //   followed: true,
-    //   fullName: "Artem",
-    //   status: "I'm a boss",
-    //   location: { city: "Minsk", country: "Belarus" },
-    // },
-    // {
-    //   id: 2,
-    //   photoUrl: "https://piper.old-games.ru/uploads/scans/2018/02/2018-02-23-20-15-20-1910.jpg",
-    //   followed: false,
-    //   fullName: "Anatoliy",
-    //   status: "founder",
-    //   location: { city: "Gomel", country: "Belarus" },
-    // },
-    // {
-    //   id: 3,
-    //   photoUrl: "https://piper.old-games.ru/uploads/scans/2018/02/2018-02-23-20-15-20-1910.jpg",
-    //   followed: true,
-    //   fullName: "Svetlana",
-    //   status: "wow",
-    //   location: { City: "Vitebsk", Country: "Belarus" },
-    // },
-    // {
-    //   id: 4,
-    //   photoUrl: "https://piper.old-games.ru/uploads/scans/2018/02/2018-02-23-20-15-20-1910.jpg",
-    //   followed: false,
-    //   fullName: "Viktor",
-    //   status: "optimist",
-    //   location: { City: "Moscow", Country: "Russia" },
-    // },
-  ],
-  pageSize: 5,
-  totalUsersCount: 0,
-  currentPage: 1,
-  isFetching: false,
+export const toggleFollowingInProgress = (isFetching, userId) => ({
+  type: TOGGLE_IS_FOLLOWING_IN_PROGRESS,
+  isFetching,
+  userId,
+});
+
+export const requestingUsers = (currentPage, pageSize) => {
+  return async (dispatch) => {
+    dispatch(setCurrentPage(currentPage));
+    dispatch(toggleIsFetching(true));
+    let response = await usersAPI.getUsers(currentPage, pageSize);
+    dispatch(toggleIsFetching(false));
+    dispatch(setUsers(response.items));
+    dispatch(setTotalUsersCount(response.totalCount));
+  };
+};
+
+export const followUnfollowFlow = async (
+  dispatch,
+  userId,
+  apiMethod,
+  actionCreator
+) => {
+  dispatch(toggleFollowingInProgress(true, userId));
+  let response = await apiMethod(userId);
+  if (response.data.resultCode === 0) {
+    dispatch(actionCreator(userId));
+  }
+  dispatch(toggleFollowingInProgress(false, userId));
+};
+
+export const follow = (userId) => {
+  return async (dispatch) => {
+    let apiMethod = usersAPI.follow.bind(usersAPI);
+    let actionCreator = followSuccess;
+    followUnfollowFlow(dispatch, userId, apiMethod, actionCreator);
+  };
+};
+
+export const unfollow = (userId) => {
+  return async (dispatch) => {
+    let apiMethod = usersAPI.unfollow.bind(usersAPI);
+    let actionCreator = unfollowSuccess;
+    followUnfollowFlow(dispatch, userId, apiMethod, actionCreator);
+  };
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -72,21 +91,15 @@ const usersReducer = (state = initialState, action) => {
     case FOLLOW:
       return {
         ...state,
-        users: state.users.map((u) => {
-          if (u.id === action.userId) {
-            return { ...u, followed: true };
-          }
-          return u;
+        users: updateObjectInArray(state.users, action.userId, "id", {
+          followed: true,
         }),
       };
     case UNFOLLOW:
       return {
         ...state,
-        users: state.users.map((u) => {
-          if (u.id === action.userId) {
-            return { ...u, followed: false };
-          }
-          return u;
+        users: updateObjectInArray(state.users, action.userId, "id", {
+          followed: false,
         }),
       };
     case SET_USERS:
@@ -108,6 +121,13 @@ const usersReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: action.isFetching,
+      };
+    case TOGGLE_IS_FOLLOWING_IN_PROGRESS:
+      return {
+        ...state,
+        followingInProgress: action.isFetching
+          ? [...state.followingInProgress, action.userId]
+          : state.followingInProgress.filter((id) => id !== action.userId),
       };
     default:
       return state;
