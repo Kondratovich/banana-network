@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/banana-network/static/css/main.43794146.chunk.css",
-    "main.js": "/banana-network/static/js/main.a89a1c79.chunk.js",
-    "main.js.map": "/banana-network/static/js/main.a89a1c79.chunk.js.map",
+    "main.js": "/banana-network/static/js/main.ed7a1a1a.chunk.js",
+    "main.js.map": "/banana-network/static/js/main.ed7a1a1a.chunk.js.map",
     "runtime-main.js": "/banana-network/static/js/runtime-main.8ff77ef3.js",
     "runtime-main.js.map": "/banana-network/static/js/runtime-main.8ff77ef3.js.map",
     "static/js/2.372793ea.chunk.js": "/banana-network/static/js/2.372793ea.chunk.js",
@@ -27,6 +27,6 @@
     "static/js/runtime-main.8ff77ef3.js",
     "static/js/2.372793ea.chunk.js",
     "static/css/main.43794146.chunk.css",
-    "static/js/main.a89a1c79.chunk.js"
+    "static/js/main.ed7a1a1a.chunk.js"
   ]
 }
