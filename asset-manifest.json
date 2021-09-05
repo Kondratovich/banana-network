@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/banana-network/static/css/main.43794146.chunk.css",
-    "main.js": "/banana-network/static/js/main.ed7a1a1a.chunk.js",
-    "main.js.map": "/banana-network/static/js/main.ed7a1a1a.chunk.js.map",
-    "runtime-main.js": "/banana-network/static/js/runtime-main.8ff77ef3.js",
-    "runtime-main.js.map": "/banana-network/static/js/runtime-main.8ff77ef3.js.map",
-    "static/js/2.372793ea.chunk.js": "/banana-network/static/js/2.372793ea.chunk.js",
-    "static/js/2.372793ea.chunk.js.map": "/banana-network/static/js/2.372793ea.chunk.js.map",
+    "main.js": "/banana-network/static/js/main.56bffd74.chunk.js",
+    "main.js.map": "/banana-network/static/js/main.56bffd74.chunk.js.map",
+    "runtime-main.js": "/banana-network/static/js/runtime-main.4089e655.js",
+    "runtime-main.js.map": "/banana-network/static/js/runtime-main.4089e655.js.map",
+    "static/js/2.8709a868.chunk.js": "/banana-network/static/js/2.8709a868.chunk.js",
+    "static/js/2.8709a868.chunk.js.map": "/banana-network/static/js/2.8709a868.chunk.js.map",
     "static/css/3.47000f6b.chunk.css": "/banana-network/static/css/3.47000f6b.chunk.css",
-    "static/js/3.6e7b1ea3.chunk.js": "/banana-network/static/js/3.6e7b1ea3.chunk.js",
-    "static/js/3.6e7b1ea3.chunk.js.map": "/banana-network/static/js/3.6e7b1ea3.chunk.js.map",
+    "static/js/3.7b01bf30.chunk.js": "/banana-network/static/js/3.7b01bf30.chunk.js",
+    "static/js/3.7b01bf30.chunk.js.map": "/banana-network/static/js/3.7b01bf30.chunk.js.map",
     "static/css/4.99d60446.chunk.css": "/banana-network/static/css/4.99d60446.chunk.css",
     "static/js/4.c4ff780a.chunk.js": "/banana-network/static/js/4.c4ff780a.chunk.js",
     "static/js/4.c4ff780a.chunk.js.map": "/banana-network/static/js/4.c4ff780a.chunk.js.map",
@@ -19,14 +19,14 @@
     "static/css/3.47000f6b.chunk.css.map": "/banana-network/static/css/3.47000f6b.chunk.css.map",
     "static/css/4.99d60446.chunk.css.map": "/banana-network/static/css/4.99d60446.chunk.css.map",
     "static/css/main.43794146.chunk.css.map": "/banana-network/static/css/main.43794146.chunk.css.map",
-    "static/js/2.372793ea.chunk.js.LICENSE.txt": "/banana-network/static/js/2.372793ea.chunk.js.LICENSE.txt",
+    "static/js/2.8709a868.chunk.js.LICENSE.txt": "/banana-network/static/js/2.8709a868.chunk.js.LICENSE.txt",
     "static/media/photo.jpg": "/banana-network/static/media/photo.d25d283a.jpg",
     "static/media/preloader.acf15138.png": "/banana-network/static/media/preloader.acf15138.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.8ff77ef3.js",
-    "static/js/2.372793ea.chunk.js",
+    "static/js/runtime-main.4089e655.js",
+    "static/js/2.8709a868.chunk.js",
     "static/css/main.43794146.chunk.css",
-    "static/js/main.ed7a1a1a.chunk.js"
+    "static/js/main.56bffd74.chunk.js"
   ]
 }
